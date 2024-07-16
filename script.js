@@ -1,6 +1,10 @@
 const itemForm = document.getElementById('item-form');
 const itemInput = document.getElementById('item-input');
 const itemList = document.getElementById('item-list');
+const clearBtn = document.getElementById('clear');
+const filter = document.getElementById('filter');
+
+
 
 function addItems(e){
     e.preventDefault();
@@ -22,6 +26,8 @@ function addItems(e){
     itemList.appendChild(listItem);
     itemInput.value = '';
 
+    resetUI();
+
 }
 
 //Function to create the remove btn 
@@ -40,6 +46,42 @@ function createIcon(classes){
     return icon;
 }
 
+//Function to remove items from the list 
+function removeItem(e){
+    if(e.target.parentElement.classList.contains('remove-item')){
+        if (confirm('Are you sure to delete?')){
+            e.target.parentElement.parentElement.remove();
+    
+            resetUI();
+        }
+    }
+}
+
+// Function for clear all the items
+function clearItems(){
+    while(itemList.firstChild){
+        itemList.removeChild(itemList.firstChild);
+    }
+    resetUI();
+}
+
+// Function to clear the filter and clear all button when no list is there.
+function resetUI(){
+    const items = itemList.querySelectorAll('li');
+
+    if (items.length != 0){
+        filter.style.display = 'block';
+        clearBtn.style.display = 'block';
+    } else {
+        filter.style.display = 'none';
+        clearBtn.style.display = 'none';
+    }
+
+}
+
 // Event Listeners
 itemForm.addEventListener('submit', addItems)
+itemList.addEventListener('click', removeItem)
+clearBtn.addEventListener('click', clearItems)
 
+resetUI();
