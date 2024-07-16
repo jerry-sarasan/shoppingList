@@ -67,6 +67,8 @@ function clearItems(){
 
 // Function to clear the filter and clear all button when no list is there.
 function resetUI(){
+    // imported here so that it not only works when page loads but works
+    // whenver the function is called
     const items = itemList.querySelectorAll('li');
 
     if (items.length != 0){
